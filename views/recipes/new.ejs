@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add recipe</title>
+</head>
+<body>
+
+  <%- include('../partials/_navbar.ejs') %>
+
+  <form action="/recipes" method="POST">
+  
+  <label for="name">Recipe name:</label>
+  <input type="text" name="name" id="name" required>
+
+  
+  <label for="cuisine">Cuisine:</label>
+  <input type="text" name="cuisine" id="cuisine">
+
+  
+  <label for="cookTime">Cook time (minutes):</label>
+  <input type="number" name="cookTime" id="cookTime" min="0" required>
+
+  
+  <label for="prepTime">Prep time (minutes):</label>
+  <input type="number" name="prepTime" id="prepTime" min="0" required>
+
+  
+  <label for="difficulty">Difficulty:</label>
+  <select name="difficulty" id="difficulty">
+    <option value="easy">Easy</option>
+    <option value="medium">Medium</option>
+    <option value="hard">Hard</option>
+  </select>
+
+  
+  <label for="servings">Servings:</label>
+  <input type="number" name="servings" id="servings" min="1">
+
+  
+  <label for="description">Description:</label>
+  <textarea name="description" id="description" required></textarea>
+
+
+  <fieldset>
+    <legend><h4>Ingredients</h4></legend>
+
+  <label for="ingredient">Ingredient</label>
+   <select name="ingredientsList[0][ingredient]" required>
+    <option value="">-- Select an ingredient --</option>
+
+    <% ingredients.forEach(ingredient => { %>
+        <option value="<%= ingredient._id %>">
+        <%= ingredient.name %>
+        </option>
+    <% }) %>
+    </select>
+
+
+    <label for="quantity">Quantity:</label>
+    <input type="number" name="ingredients[0][quantity]" min="0">
+
+    <label for="unit">Unit:</label>
+    <select name="ingredients[0][unit]">
+      <option value="g">g</option>
+      <option value="ml">ml</option>
+      <option value="cup">cup</option>
+      <option value="tbsp">tbsp</option>
+      <option value="tsp">tsp</option>
+      <option value="lb">lb</option>
+      <option value="pint">pint</option>
+    </select>
+
+    <label for="size">Size:</label>
+    <select name="ingredients[0][size]">
+      <option value="">-- optional --</option>
+      <option value="small">Small</option>
+      <option value="medium">Medium</option>
+      <option value="large">Large</option>
+    </select>
+  </fieldset>
+
+  <!-- Steps (basic version) -->
+  <fieldset>
+  <legend><h4>Steps</h4></legend>
+
+  <div id="steps-container">
+    <div class="step">
+      <label>Step 1:</label>
+      <input type="text" name="steps[0][instruction]" required/>
+      
+    </div>
+  </div>
+
+  <button type="button" id="add-step">Add step</button>
+</fieldset>
+
+
+  <button type="submit">Create recipe</button>
+</form>
+
+</body>
+<script src="/js/steps.js"></script>
+</html>

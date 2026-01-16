@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Recipe </title>
+</head>
+<body>
+    
+    <h1>Edit </h1>
+
+    <form action="/recipes/<%=recipe._id%>?_method=PUT" method="POST">
+
+<label for="name">Recipe name:</label>
+  <input type="text" name="name" id="name" required value="<%=recipe.name %>">
+
+  
+  <label for="cuisine">Cuisine:</label>
+  <input type="text" name="cuisine" id="cuisine" value="<%=recipe.cuisine %>">
+
+  
+  <label for="cookTime">Cook time (minutes):</label>
+  <input type="number" name="cookTime" id="cookTime" min="0" required value="<%=recipe.cookTime %>">
+
+  
+  <label for="prepTime">Prep time (minutes):</label>
+  <input type="number" name="prepTime" id="prepTime" min="0" required value="<%=recipe.prepTime %>">
+
+  
+  <label for="difficulty">Difficulty:</label>
+  <select name="difficulty" id="difficulty" value="<%=recipe.difficulty %>">
+    <option value="easy">Easy</option>
+    <option value="medium">Medium</option>
+    <option value="hard">Hard</option>
+  </select>
+
+  
+  <label for="servings">Servings:</label>
+  <input type="number" name="servings" id="servings" min="1" value="<%=recipe.servings %>">
+
+  
+  <label for="description">Description:</label>
+  <textarea name="description" id="description" required value="<%=recipe.description %>" ></textarea>
+
+
+  <fieldset>
+    <legend><h4>Ingredients</h4></legend>
+
+  <% if (recipe.ingredientsList.length === 0) { %>
+  <p>No ingredients added yet.</p>
+<% } else { %>
+
+<% recipe.ingredientsList.forEach((item, index) => { %>
+  <div class="ingredient-row">
+
+    <label>Ingredient</label>
+    <select name="ingredientsList[<%= index %>][ingredient]" required>
+      <option value="">-- Select ingredient --</option>
+
+      <% ingredients.forEach(ing => { %>
+        <option
+          value="<%= ing._id %>"
+          <%= ing._id.toString() === item.ingredient._id.toString() ? "selected" : "" %>
+        >
+          <%= ing.name %>
+        </option>
+      <% }) %>
+    </select>
+
+    <input
+      type="number"
+      name="ingredientsList[<%= index %>][quantity]"
+      value="<%= item.quantity %>"
+      min="0"
+      required
+    >
+
+    <select name="ingredientsList[<%= index %>][unit]" required>
+      <option value="g" <%= item.unit === "g" ? "selected" : "" %>>g</option>
+      <option value="ml" <%= item.unit === "ml" ? "selected" : "" %>>ml</option>
+      <option value="cup" <%= item.unit === "cup" ? "selected" : "" %>>cup</option>
+      <option value="tbsp" <%= item.unit === "tbsp" ? "selected" : "" %>>tbsp</option>
+      <option value="tsp" <%= item.unit === "tsp" ? "selected" : "" %>>tsp</option>
+    </select>
+
+  </div>
+<% }) %>
+
+
+
+<% } %>
+
+
+  </fieldset>
+
+  
+  <fieldset>
+  <legend><h4>Steps</h4></legend>
+
+  <% recipe.steps.forEach((step, index) => { %>
+  <div class="step">
+    <label>Step <%= index + 1 %></label>
+
+    <input
+      type="text"
+      name="steps[<%= index %>][instruction]"
+      value="<%= step.instruction %>"
+      required
+    >
+  </div>
+<% }) %>
+
+
+  <button type="button" id="add-step">Add step</button>
+</fieldset>
+
+
+  <button type="submit">Update recipe</button>
+</form>
+
+
+    </form>
+</body>
+<script src="/js/steps.js"></script>
+</html>
