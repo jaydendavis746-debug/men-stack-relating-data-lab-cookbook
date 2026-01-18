@@ -46,39 +46,22 @@
   <fieldset>
     <legend><h4>Ingredients</h4></legend>
 
-  <label for="ingredient">Ingredient</label>
-   <select name="ingredientsList[0][ingredient]" required>
-    <option value="">-- Select an ingredient --</option>
-
-    <% ingredients.forEach(ingredient => { %>
-        <option value="<%= ingredient._id %>">
-        <%= ingredient.name %>
-        </option>
+  <div>
+  <select name="ingredientsList[0][ingredient]" required>
+    <% ingredients.forEach(ing => { %>
+      <option value="<%= ing._id %>"><%= ing.name %></option>
     <% }) %>
-    </select>
+  </select>
 
+  <input type="number" name="ingredientsList[0][quantity]" min="0">
+  
+  <select name="ingredientsList[0][unit]">
+    <option value="g">g</option>
+    <option value="cup">cup</option>
+    <option value="tbsp">tbsp</option>
+  </select>
+</div>
 
-    <label for="quantity">Quantity:</label>
-    <input type="number" name="ingredients[0][quantity]" min="0">
-
-    <label for="unit">Unit:</label>
-    <select name="ingredients[0][unit]">
-      <option value="g">g</option>
-      <option value="ml">ml</option>
-      <option value="cup">cup</option>
-      <option value="tbsp">tbsp</option>
-      <option value="tsp">tsp</option>
-      <option value="lb">lb</option>
-      <option value="pint">pint</option>
-    </select>
-
-    <label for="size">Size:</label>
-    <select name="ingredients[0][size]">
-      <option value="">-- optional --</option>
-      <option value="small">Small</option>
-      <option value="medium">Medium</option>
-      <option value="large">Large</option>
-    </select>
   </fieldset>
 
   <!-- Steps (basic version) -->

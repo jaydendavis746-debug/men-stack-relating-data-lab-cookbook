@@ -1,0 +1,34 @@
+<h1>Add New Ingredient</h1>
+
+<form action="/ingredients" method="POST">
+
+  <div>
+    <label for="name">Ingredient Name</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+    >
+  </div>
+
+  <div>
+    <label for="category">Category</label>
+    <select id="category" name="category">
+      <option value="vegetable">Vegetable</option>
+      <option value="fruit">Fruit</option>
+      <option value="meat">Meat</option>
+      <option value="seafood">Seafood</option>
+      <option value="dairy">Dairy</option>
+      <option value="grain">Grain</option>
+      <option value="spice">Spice</option>
+      <option value="herb">Herb</option>
+      <option value="other" selected>Other</option>
+    </select>
+  </div>
+
+  <button type="submit">Create Ingredient</button>
+
+</form>
+
+<a href="/ingredients">← Back to ingredients</a>

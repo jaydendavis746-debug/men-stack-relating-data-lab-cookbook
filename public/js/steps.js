@@ -1,50 +1,44 @@
 
-let stepIndex= 1
-const container = document.querySelector('#steps-container')
-const addStepBtn = document.getElementById('add-step')
+let stepIndex = 0;
 
-addStepBtn.addEventListener('click',()=>{
+const container = document.getElementById("steps-container");
+const addStepBtn = document.getElementById("add-step");
 
-    console.log('hello')
-    const stepDiv = document.createElement('div')
-    stepDiv.className='step'
-    const label = document.createElement('label');
-    const input = document.createElement('input');
-    const removeBtn = document.createElement('button')
+addStepBtn.addEventListener("click", () => {
+  const stepDiv = document.createElement("div");
+  stepDiv.className = "step";
 
-    label.textContent = `Step ${stepIndex +1}:`
-    input.type = 'text';
-    input.name = `steps[${stepIndex}][instruction]`
-    input.required = true;
+  const label = document.createElement("label");
+  label.textContent = `Step ${stepIndex + 1}`;
 
-    removeBtn.type='button'
-    removeBtn.textContent= 'Remove step'
-    removeBtn.className = 'remove-step'
+  const input = document.createElement("input");
+  input.type = "text";
+  input.name = `steps[${stepIndex}][instruction]`;
+  input.required = true;
 
+  const removeBtn = document.createElement("button");
+  removeBtn.type = "button";
+  removeBtn.textContent = "Remove";
+  removeBtn.className = "remove-step";
 
-    stepDiv.append(label, input, removeBtn);
-    container.appendChild(stepDiv);
-    stepIndex++;
-
-
-     removeBtn.addEventListener('click', ()=> {
+  removeBtn.addEventListener("click", () => {
     stepDiv.remove();
-    updateStepLabels()
-})
-   
+    updateStepLabels();
+  });
 
-})
+  stepDiv.append(label, input, removeBtn);
+  container.appendChild(stepDiv);
 
-const updateStepLabels = () => {
-    const steps = container.querySelectorAll(".step");
-    steps.forEach((step, index) => {
-        const label = step.querySelector("label");
-        const input = step.querySelector("input");
-        label.textContent = `Step ${index + 1}`;
-        input.name = `steps[${index}][instruction]`;
-    });
-    stepIndex = steps.length;
-};
+  stepIndex++;
+});
 
+function updateStepLabels() {
+  const steps = container.querySelectorAll(".step");
 
+  steps.forEach((step, index) => {
+    step.querySelector("label").textContent = `Step ${index + 1}`;
+    step.querySelector("input").name = `steps[${index}][instruction]`;
+  });
 
+  stepIndex = steps.length;
+}

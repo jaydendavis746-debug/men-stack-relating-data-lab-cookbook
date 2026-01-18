@@ -24,6 +24,7 @@ router.get('/new', async (req, res)=>{
 
 router.post('/', async (req, res) => {
   try {
+    console.log(req.body)
     const newRecipe = new Recipe(req.body);
     newRecipe.author = req.session.user._id;
     await newRecipe.save();
@@ -36,9 +37,13 @@ router.post('/', async (req, res) => {
 
 
 router.get('/:recipeId', async (req, res) => {
-    const recipeId = req.params.recipeId
-    const getAllRecipes = await Recipe.findById(recipeId).populate('author');
-    res.render('recipes/show.ejs',{recipe: getAllRecipes}  );
+    const recipe = await Recipe.findById(req.params.recipeId).populate([
+  { path: "ingredientsList.ingredient" },
+  { path: "author" }
+]);
+
+
+    res.render('recipes/show.ejs', {recipe: recipe}  );
 
 })
 

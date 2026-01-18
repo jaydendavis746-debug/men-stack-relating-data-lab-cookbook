@@ -11,12 +11,47 @@
     <h3>Posted by <%= recipe.author.username %> </h3>
     
     <ul>
-        <li><strong style="text-transform: capitalize;"><%=recipe.difficulty %></strong> to cook</li>
-        <li>Preparation:<%=recipe.prepTime%>m Cooking time:<%=recipe.cookTime%>m Total time:<%=recipe.prepTime + recipe.cookTime %>m </li>
-        <li> <p>Description:</p>  <%=recipe.description %></li>
-        <li><p>Ingredients List:</p> </li>
+  <li>
+    <strong style="text-transform: capitalize;">
+      <%= recipe.difficulty %>
+    </strong>
+    to cook
+  </li>
 
+  <li>
+    Preparation: <%= recipe.prepTime %>m |
+    Cooking time: <%= recipe.cookTime %>m |
+    Total time: <%= recipe.prepTime + recipe.cookTime %>m
+  </li>
+
+  <li>
+    <p><strong>Description:</strong></p>
+    <%= recipe.description %>
+  </li>
+
+  <li>
+    <p><strong>Ingredients:</strong></p>
+    <ul>
+      <% recipe.ingredientsList.forEach(item => { %>
+        <li>
+          <%= item.quantity %>
+          <%= item.unit %>
+          <%= item.ingredient.name %>
+        </li>
+      <% }) %>
     </ul>
+  </li>
+
+  <li>
+    <p><strong>Steps:</strong></p>
+    <ol>
+      <% recipe.steps.forEach(step => { %>
+        <li><%= step.instruction %></li>
+      <% }) %>
+    </ol>
+  </li>
+</ul>
+
 <% if(recipe.author._id.equals(user._id)){ %>
     <p>You posted this </p>
    <form action="/recipes/<%=recipe._id%>?_method=DELETE" method="POST">
